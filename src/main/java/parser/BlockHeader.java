@@ -22,12 +22,10 @@ public class BlockHeader {
         hashMerkleRoot = new byte[hashLength];
     }
 
-    // TODO: function should probably get a ByteBuffer
-    // as a parameter, that would make things easier
     /**
-     * parseBlockHeader parses an array of bytes into a BlockHeader object
+     * parseBlockHeader parses an array of bytes containing a block's header into a BlockHeader object
      *
-     * @param blockHeaderBytes
+     * @param blockHeaderBytes array of bytes containing a block's header
      * @return parsed BlockHeader object
      */
     public static BlockHeader parseBlockHeader(byte[] blockHeaderBytes) {

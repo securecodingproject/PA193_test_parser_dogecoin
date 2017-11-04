@@ -18,12 +18,10 @@ public class Transaction {
         lockTime = new byte[lockTimeLength];
     }
 
-    // TODO: function should probably get a ByteBuffer
-    // as a parameter, that would make things easier
     /**
-     * parseTransaction parses an array of bytes into a Transaction object.
+     * parseTransaction parses an array of bytes containing a transaction into a Transaction object.
      *
-     * @param transactionBytes
+     * @param transactionBytes array of bytes containing a transaction
      * @return parsed Transaction object.
      */
     public static Transaction parseTransaction(byte[] transactionBytes) {
@@ -33,9 +31,9 @@ public class Transaction {
     // TODO: function should probably get a ByteBuffer
     // as a parameter, that would make things easier
     /**
-     * parseTransactionList parses an array of bytes into a List<Transaction> object.
+     * parseTransactionList parses an array of bytes array of bytes containing a list of transaction into a List<Transaction> object.
      *
-     * @param transactionListBytes
+     * @param transactionListBytes array of bytes containing a list of transaction
      * @return parsed List<Transaction> object.
      */
     public static List<Transaction> parseTransactionList(byte[] transactionListBytes) {

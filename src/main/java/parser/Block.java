@@ -13,9 +13,9 @@ public class Block {
 
     /**
      * Given an array of bytes, determines if it is the magic number
-     * associated with Dogecoin.
+     * of Dogecoin (0xC0C0C0C0).
      *
-     * @param magicNumber
+     * @param magicNumber array of bytes containing bytes to check against magic number
      * @return value indicates whether magic number is correct
      */
     public static boolean checkMagicNumber(byte[] magicNumber) {
@@ -29,12 +29,10 @@ public class Block {
         return true;
     }
 
-    // TODO: function should probably get a ByteBuffer
-    // as a parameter, that would make things easier
     /**
-     * parseBlock parses an array of bytes into a Block object.
+     * Parses an array of bytes containing a block into a Block object
      *
-     * @param blockBytes
+     * @param blockBytes array of bytes containing block
      * @return parsed Block object
      */
     public static Block parseBlock(byte[] blockBytes) {

@@ -1,6 +1,7 @@
 package parser;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.List;
 
 // https://en.bitcoin.it/wiki/Block
@@ -36,7 +37,10 @@ public class Block {
      * @return parsed Block object
      */
     public static Block parseBlock(byte[] blockBytes) {
+        // create byte buffer, set little endian byte order
         ByteBuffer blockBuffer = ByteBuffer.wrap(blockBytes);
+        blockBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
         Block block = new Block();
 
         // parse magic number

@@ -28,12 +28,10 @@ public class Transaction {
         return null;
     }
 
-    // TODO: function should probably get a ByteBuffer
-    // as a parameter, that would make things easier
     /**
      * parseTransactionList parses an array of bytes array of bytes containing a list of transaction into a List<Transaction> object.
      *
-     * @param transactionListBytes array of bytes containing a list of transaction
+     * @param transactionListBytes array of bytes containing several transactions
      * @return parsed List<Transaction> object.
      */
     public static List<Transaction> parseTransactionList(byte[] transactionListBytes) {

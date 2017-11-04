@@ -1,6 +1,7 @@
 package parser;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.sql.Timestamp;
 
 // https://en.bitcoin.it/wiki/Block_hashing_algorithm
@@ -34,6 +35,7 @@ public class BlockHeader {
             return null;
 
         ByteBuffer blockHeaderBuffer = ByteBuffer.wrap(blockHeaderBytes);
+        blockHeaderBuffer.order(ByteOrder.LITTLE_ENDIAN);
         BlockHeader blockHeader = new BlockHeader();
 
         blockHeader.version = blockHeaderBuffer.getInt();

@@ -45,7 +45,7 @@ public class Block {
 
         // parse magic number
         byte[] magicNumberBytes = new byte[Block.magicNumber.length];
-        blockBuffer.get(magicNumberBytes, 0, Block.magicNumber.length);
+        blockBuffer.get(magicNumberBytes);
         if (!Block.checkMagicNumber(magicNumberBytes))
             // TODO: figure out error handling
             return null;
@@ -70,7 +70,7 @@ public class Block {
         // parse transactions
         byte[] transactionListBytes = new byte[lengthUntilEndOfBlock];
         blockBuffer.get(transactionListBytes);
-        block.transactions = Transaction.parseTransactionList(transactionListBytes);
+        block.transactions = Transaction.parseTransactionList(transactionListBytes, block.transactionCounter);
 
         return block;
     }

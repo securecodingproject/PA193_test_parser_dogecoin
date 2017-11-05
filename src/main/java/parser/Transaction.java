@@ -29,12 +29,12 @@ public class Transaction {
     }
 
     /**
-     * parseTransactionList parses an array of bytes array of bytes containing a list of transaction into a List<Transaction> object.
+     * parseTransactionList parses an array of bytes array of bytes containing a list of transactions into a List<Transaction> object.
      *
      * @param transactionListBytes array of bytes containing several transactions
      * @return parsed List<Transaction> object.
      */
-    public static List<Transaction> parseTransactionList(byte[] transactionListBytes) {
+    public static List<Transaction> parseTransactionList(byte[] transactionListBytes, int transactionCounter) {
         return null;
     }
 }

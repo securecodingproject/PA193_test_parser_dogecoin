@@ -6,11 +6,11 @@ import java.sql.Timestamp;
 
 // https://en.bitcoin.it/wiki/Block_hashing_algorithm
 public class BlockHeader {
-    public static int length = 4 + 20 + 20 + 4 + 4 + 4;
+    public static int length = 4 + 32 + 32 + 4 + 4 + 4;
 
     public int version;
     // scrypt hash length
-    public static final short hashLength = 20;
+    public static final short hashLength = 32;
     public byte[] hashPrevBlock;
     public byte[] hashMerkleRoot;
     public int timeInSecondsSinceEpoch;

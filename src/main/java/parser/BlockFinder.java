@@ -1,7 +1,5 @@
 package parser;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

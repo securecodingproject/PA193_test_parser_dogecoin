@@ -3,6 +3,7 @@ package parser;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.sql.Timestamp;
+import java.util.Date;
 
 // https://en.bitcoin.it/wiki/Block_hashing_algorithm
 public class BlockHeader {
@@ -14,7 +15,7 @@ public class BlockHeader {
     public byte[] hashPrevBlock;
     public byte[] hashMerkleRoot;
     public int timeInSecondsSinceEpoch;
-    public Timestamp time;
+    public Date time;
     public int target;
     public int nonce;
 
@@ -43,6 +44,7 @@ public class BlockHeader {
         blockHeaderBuffer.get(blockHeader.hashMerkleRoot);
         blockHeader.timeInSecondsSinceEpoch = blockHeaderBuffer.getInt();
         // TODO: parse Timestamp time from timeInSecondsSinceEpoch
+        blockHeader.time = new Date((long)blockHeader.timeInSecondsSinceEpoch * 1000);
         blockHeader.target = blockHeaderBuffer.getInt();
         blockHeader.nonce = blockHeaderBuffer.getInt();
 

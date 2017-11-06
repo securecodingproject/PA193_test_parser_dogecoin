@@ -15,7 +15,7 @@ public class BlockHeaderTest {
 
     @Test
     public void TestParseBlockHeader() {
-        BlockHeaderTestCase tcs[] = new BlockHeaderTestCase[3];
+        BlockHeaderTestCase tcs[] = new BlockHeaderTestCase[2];
         tcs[0] = new BlockHeaderTestCase();
         tcs[0].testName = "valid block header";
         tcs[0].blockHeaderHexString = "010000000000000000000000000000000000000000000000000000000000000000000000696AD20E2DD4365C7459B4A4A5AF743D5E92C6DA3229E6532CD605F6533F2A5B24A6A152F0FF0F1E67860100";
@@ -38,7 +38,7 @@ public class BlockHeaderTest {
 
             if (tcs[i].expected == null || bh == null) {
                 assertTrue(tcs[i].expected == bh);
-                return;
+                continue;
             }
 
             assertTrue(bh.version == 1);

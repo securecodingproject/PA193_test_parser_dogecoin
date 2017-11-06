@@ -10,24 +10,6 @@ import java.nio.file.Paths;
 public class BlockFinder {
 
     /**
-     * isSame returns a boolean indicating whether two byte arrays have equal content
-     *
-     * @param a one of the byte arrays to compare
-     * @param b other byte array to compare
-     * @return true if a and b have same content, false if they have different content (or length)
-     */
-    private static boolean isSame(byte[] a, byte[] b) {
-        if (a.length != b.length)
-            return false;
-
-        for (int i = 0; i < a.length; i++)
-            if (a[i] != b[i])
-                return false;
-
-        return true;
-    }
-
-    /**
      * byMerkleRootInByteArray looks for a hash in a byte array and returns block corresponding to hash
      *
      * @param src byte array to search for hash in
@@ -50,7 +32,7 @@ public class BlockFinder {
             // get hash, compare
             byte[] hash = new byte[BlockHeader.hashLength];
             bytesBuffer.get(hash);
-            if (BlockFinder.isSame(hash, merkleRootHash)) {
+            if (Helpers.isSame(hash, merkleRootHash)) {
                 bytesBuffer.position(initialPosition);
                 byte[] block = new byte[8 + blockSize];
                 bytesBuffer.get(block);

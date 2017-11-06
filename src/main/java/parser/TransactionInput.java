@@ -11,7 +11,13 @@ public class TransactionInput {
         prevTransactionHash = new byte[32];
     }
 
+    /**
+     * parseTransactionInput parses a byte array into a TransactionInput object
+     *
+     * @param transactionInputBytes byte array containing transaction input
+     * @return parsed TransactionInput object
+     */
     public TransactionInput parseTransactionInput(byte[] transactionInputBytes) {
-
+        return null;
     }
 }

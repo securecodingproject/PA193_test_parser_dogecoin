@@ -17,6 +17,12 @@ public class BlockFinder {
      * @return byte array containig block in case hash was found, null otherwise
      */
     public static byte[] byMerkleRootInByteArray(byte[] src, byte[] merkleRootHash) {
+        if (src == null || merkleRootHash == null)
+            return null;
+
+        if (merkleRootHash.length != 32)
+            return null;
+
         ByteBuffer bytesBuffer = ByteBuffer.wrap(src);
         bytesBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -51,12 +57,14 @@ public class BlockFinder {
      *
      * @param filepath file to look for hash in
      * @param merkleRootHash hash to look for in file
-     * @return null if hash wasn' found, the block as an array of bytes if it was
+     * @return null if hash wasn't found, the block as an array of bytes if it was
      * @throws IOException
      */
     public static byte[] byMerkleRootInFile(String filepath, byte[] merkleRootHash) throws IOException {
-        if (merkleRootHash == null || merkleRootHash.length != BlockHeader.hashLength)
-            // TODO: throw exception
+        if (merkleRootHash == null)
+            return null;
+
+        if (merkleRootHash.length != BlockHeader.hashLength)
             return null;
 
         Path path = Paths.get(filepath);

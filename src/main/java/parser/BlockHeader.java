@@ -31,8 +31,10 @@ public class BlockHeader {
      * @return parsed BlockHeader object
      */
     public static BlockHeader parseBlockHeader(byte[] blockHeaderBytes) {
+        if (blockHeaderBytes == null)
+            return null;
+
         if (blockHeaderBytes.length != BlockHeader.length)
-            // TODO: figure out error handling
             return null;
 
         ByteBuffer blockHeaderBuffer = ByteBuffer.wrap(blockHeaderBytes);
@@ -43,7 +45,6 @@ public class BlockHeader {
         blockHeaderBuffer.get(blockHeader.hashPrevBlock);
         blockHeaderBuffer.get(blockHeader.hashMerkleRoot);
         blockHeader.timeInSecondsSinceEpoch = blockHeaderBuffer.getInt();
-        // TODO: parse Timestamp time from timeInSecondsSinceEpoch
         blockHeader.time = new Date((long)blockHeader.timeInSecondsSinceEpoch * 1000);
         blockHeader.target = blockHeaderBuffer.getInt();
         blockHeader.nonce = blockHeaderBuffer.getInt();

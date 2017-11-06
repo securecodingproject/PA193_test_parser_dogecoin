@@ -2,23 +2,21 @@ package parser;
 
 import org.junit.Test;
 
-import java.nio.ByteBuffer;
-
 import static org.junit.Assert.*;
-;
+
 public class BlockHeaderTest {
     public class BlockHeaderTestCase {
         String testName;
-        String blockHeaderHexString;
+        byte[] blockHeaderByteArray;
         BlockHeader expected;
     }
 
     @Test
     public void TestParseBlockHeader() {
-        BlockHeaderTestCase tcs[] = new BlockHeaderTestCase[2];
+        BlockHeaderTestCase tcs[] = new BlockHeaderTestCase[3];
         tcs[0] = new BlockHeaderTestCase();
         tcs[0].testName = "valid block header";
-        tcs[0].blockHeaderHexString = "010000000000000000000000000000000000000000000000000000000000000000000000696AD20E2DD4365C7459B4A4A5AF743D5E92C6DA3229E6532CD605F6533F2A5B24A6A152F0FF0F1E67860100";
+        tcs[0].blockHeaderByteArray = Helpers.hexStringToByteArray("010000000000000000000000000000000000000000000000000000000000000000000000696AD20E2DD4365C7459B4A4A5AF743D5E92C6DA3229E6532CD605F6533F2A5B24A6A152F0FF0F1E67860100");
         tcs[0].expected = new BlockHeader();
         tcs[0].expected.hashPrevBlock = new byte[32];
         tcs[0].expected.hashPrevBlock = Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000");
@@ -30,11 +28,16 @@ public class BlockHeaderTest {
 
         tcs[1] = new BlockHeaderTestCase();
         tcs[1].testName = "inappropriate length";
-        tcs[1].blockHeaderHexString = "01898984732EBFC3";
+        tcs[1].blockHeaderByteArray = Helpers.hexStringToByteArray("01898984732EBFC3");
         tcs[1].expected = null;
 
+        tcs[2] = new BlockHeaderTestCase();
+        tcs[2].testName = "null passed";
+        tcs[2].blockHeaderByteArray = null;
+        tcs[2].expected = null;
+
         for (int i = 0; i < tcs.length; i++) {
-            BlockHeader bh = BlockHeader.parseBlockHeader(Helpers.hexStringToByteArray(tcs[i].blockHeaderHexString));
+            BlockHeader bh = BlockHeader.parseBlockHeader(tcs[i].blockHeaderByteArray);
 
             if (tcs[i].expected == null || bh == null) {
                 assertTrue(tcs[i].expected == bh);

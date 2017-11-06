@@ -47,13 +47,11 @@ public class Block {
         byte[] magicNumberBytes = new byte[Block.magicNumber.length];
         blockBuffer.get(magicNumberBytes);
         if (!Block.checkMagicNumber(magicNumberBytes))
-            // TODO: figure out error handling
             return null;
 
         // parse block size
         block.blockSize = blockBuffer.getInt();
         if (block.blockSize != (blockBuffer.limit() - Block.magicNumber.length))
-            // TODO: figure out error handling
             return null;
         int lengthUntilEndOfBlock = block.blockSize;
 

@@ -7,10 +7,10 @@ public class Transaction {
     public int version;
     // TODO: figure out VarInt protocol https://en.bitcoin.it/wiki/Protocol_specification#Variable_length_integer
     public /*var*/int inCounter;
-    public List<InOrOutput> inputs;
+    public List<TransactionInput> inputs;
     // TODO: figure out VarInt protocol https://en.bitcoin.it/wiki/Protocol_specification#Variable_length_integer
     public /*var*/int outCounter;
-    public List<InOrOutput> outputs;
+    public List<TransactionOutput> outputs;
     public static int lockTimeLength = 4;
     public byte[] lockTime;
 

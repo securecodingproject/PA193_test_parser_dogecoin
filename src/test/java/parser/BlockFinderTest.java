@@ -2,7 +2,9 @@ package parser;
 
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -24,12 +26,28 @@ public class BlockFinderTest {
         assertArrayEquals(dogecoinFirstBlockAsByteArray, out);
     }
 
+    @Test
     public void TestByMerkleRootInByteArrayNotFirstBlockHasHash() {
         // merkle root hash of second block
-        String hashMerkleRootToLookForAsHexString = "3b14b76d22a3f2859d73316002bc1b9bfc7f37e2c3393be9b722b62bbd786983";
+        String hashMerkleRootToLookForAsHexString = "1C525F1049E519256961F407E96E22AEF391581DE98686524EF500769F777E5F";
         byte[] hashMerkleRootToLookForAsByteArray = Helpers.hexStringToByteArray(hashMerkleRootToLookForAsHexString);
 
         byte[] out = BlockFinder.byMerkleRootInByteArray(dogecoinFirstTwoBlocksByteArray, hashMerkleRootToLookForAsByteArray);
+
+        assertArrayEquals(dogecoinSecondBlockAsByteArray, out);
+    }
+
+    @Test
+    public void TestByMerkleRootInFile() throws IOException {
+        File f = File.createTempFile("tmp", null);
+        f.deleteOnExit();
+        FileOutputStream fos = new FileOutputStream(f);
+        fos.write(dogecoinFirstTwoBlocksByteArray);
+        fos.close();
+
+        String hashMerkleRootToLookForAsHexString = "1C525F1049E519256961F407E96E22AEF391581DE98686524EF500769F777E5F";
+        byte[] hashMerkleRootToLookForAsByteArray = Helpers.hexStringToByteArray(hashMerkleRootToLookForAsHexString);
+        byte[] out = BlockFinder.byMerkleRootInFile("twoblocks.dat", hashMerkleRootToLookForAsByteArray);
 
         assertArrayEquals(dogecoinSecondBlockAsByteArray, out);
     }

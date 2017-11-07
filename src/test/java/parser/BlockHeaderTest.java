@@ -7,7 +7,7 @@ import java.util.Arrays;
 import static org.junit.Assert.*;
 
 public class BlockHeaderTest {
-    public class BlockHeaderTestCase {
+    private class BlockHeaderTestCase {
         String testName;
         byte[] blockHeaderByteArray;
         BlockHeader expected;

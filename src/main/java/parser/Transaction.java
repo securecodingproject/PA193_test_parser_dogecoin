@@ -40,7 +40,11 @@ public class Transaction {
         tx.inCounter = new VarInt(vi, 0);
         // jump to after varint
         // casting to int is very wrong, don't know what to do instead
+<<<<<<< HEAD
         txBuffer.position(txBuffer.position() - (9 - tx.inCounter.size));
+=======
+        txBuffer.position(txBuffer.position() - (9 - (int)tx.inCounter.value));
+>>>>>>> 449030d5acb2a6da72e69cdc141b3760ebb2d08c
 
         List<TransactionInput> txInList = new ArrayList<TransactionInput>();
 
@@ -52,7 +56,6 @@ public class Transaction {
         txBuffer.get(vi);
         tx.outCounter = new VarInt(vi, 0);
         // jump to after varint
-        // casting to int is very wrong, don't know what to do instead
         txBuffer.position(txBuffer.position() - (9 - tx.inCounter.size));
 
         for (int i = 0; i < tx.outCounter.value; i++) {

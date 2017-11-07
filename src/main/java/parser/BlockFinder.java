@@ -34,7 +34,7 @@ public class BlockFinder {
             int blockSize = bytesBuffer.getInt();
 
             // jump to first hash
-            bytesBuffer.position(initialPosition + 32);
+            bytesBuffer.position(initialPosition + 44);
 
             // get hash, compare
             byte[] hash = new byte[BlockHeader.hashLength];

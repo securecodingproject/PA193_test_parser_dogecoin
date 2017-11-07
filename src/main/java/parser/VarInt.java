@@ -1,8 +1,8 @@
 package parser;
 
 public class VarInt {
-    public static long value;
-    public static int size;
+    public final long value;
+    public final int size;
 
     //  Just follow table https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer
     public static int sizeOf(long v){
@@ -17,7 +17,9 @@ public class VarInt {
         value = v;
         size = sizeOf(v);
     }
-
+    // Creates a new VarInt with value parsed from the specified offset of the given buffer.
+    // 'buf' is the buffer containing the value
+    // 'offset' is the offset of the value
     public VarInt(byte[] buf, int offset){
         int first = 0xFF & buf[offset];
         if( first < 253 ){

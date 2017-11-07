@@ -47,7 +47,7 @@ public class BlockFinderTest {
 
         String hashMerkleRootToLookForAsHexString = "1C525F1049E519256961F407E96E22AEF391581DE98686524EF500769F777E5F";
         byte[] hashMerkleRootToLookForAsByteArray = Helpers.hexStringToByteArray(hashMerkleRootToLookForAsHexString);
-        byte[] out = BlockFinder.byMerkleRootInFile("twoblocks.dat", hashMerkleRootToLookForAsByteArray);
+        byte[] out = BlockFinder.byMerkleRootInFile(f.getPath(), hashMerkleRootToLookForAsByteArray);
 
         assertArrayEquals(dogecoinSecondBlockAsByteArray, out);
     }

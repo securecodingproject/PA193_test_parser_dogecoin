@@ -57,7 +57,7 @@ public class BlockHeader {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Version: ");
-        sb.append(this.version);
+        sb.append(Integer.toUnsignedString(this.version));
         sb.append("\r\nPrevious block hash: ");
         sb.append(Helpers.byteArrayToHexString(this.hashPrevBlock));
         sb.append("\r\nMerkle root hash of transactions: ");
@@ -65,9 +65,9 @@ public class BlockHeader {
         sb.append("\r\nTime: ");
         sb.append(this.time.toString());
         sb.append("\r\nTarget: ");
-        sb.append(this.target);
+        sb.append(Integer.toUnsignedString(this.target));
         sb.append("\r\nNonce: ");
-        sb.append(this.nonce);
+        sb.append(Integer.toUnsignedString(this.nonce));
 
         return sb.toString();
     }

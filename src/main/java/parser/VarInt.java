@@ -51,6 +51,6 @@ public class VarInt {
 
     @Override
     public String toString() {
-        return Double.toString(value);
+        return Long.toString(value);
     }
 }

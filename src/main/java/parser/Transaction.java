@@ -52,7 +52,7 @@ public class Transaction {
 
             txInList.add(txIn);
 
-            remainingNumberOfBytesOfTxBuffer -= txIn.;
+            remainingNumberOfBytesOfTxBuffer -= txIn.inputSize;
 
             txBuffer.position(initialPos + (int)txIn.inputSize);
         }

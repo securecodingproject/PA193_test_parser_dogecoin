@@ -18,7 +18,7 @@ public class TransactionOutput {
 
         byte[] tempArray = new byte[8];
         txOutBuffer.get(tempArray);
-        value = new Satoshi(tempArray);
+        txOut.value = new Satoshi(tempArray);
 
         byte[] vi = new byte[9];
         txOutBuffer.get(vi);

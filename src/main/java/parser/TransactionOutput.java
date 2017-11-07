@@ -7,6 +7,7 @@ public class TransactionOutput {
     // TODO: figure out VarInt protocol
     public VarInt scriptLength;
     public byte[] script;
+    public long outputSize;
 
     public TransactionOutput parseTransactionOutput(byte[] transactionOutputBytes) {
         if (transactionOutputBytes == null)
@@ -26,6 +27,8 @@ public class TransactionOutput {
 
         txOut.script = new byte[(int)txOut.scriptLength.value];
         txOutBuffer.get(txOut.script);
+
+        txOut.outputSize = 8 + txOut.scriptLength.size + txOut.scriptLength.value;
 
         return txOut;
     }

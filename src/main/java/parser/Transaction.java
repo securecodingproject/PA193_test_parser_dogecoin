@@ -54,7 +54,7 @@ public class Transaction {
         txBuffer.position(txBuffer.position() - (9 - tx.outCounter.size));
 
         for (int i = 0; i < tx.outCounter.value; i++) {
-            // parse txIn then add to txInList
+            // parse txOut then add to txOutList
         }
 
         byte[] lockTimeBytes = new byte[lockTimeLength];

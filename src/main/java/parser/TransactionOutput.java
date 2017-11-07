@@ -1,6 +1,7 @@
 package parser;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class TransactionOutput {
     public Satoshi value;
@@ -15,6 +16,7 @@ public class TransactionOutput {
 
         TransactionOutput txOut = new TransactionOutput();
         ByteBuffer txOutBuffer = ByteBuffer.wrap(transactionOutputBytes);
+        txOutBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         byte[] tempArray = new byte[8];
         txOutBuffer.get(tempArray);

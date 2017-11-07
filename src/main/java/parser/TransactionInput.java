@@ -1,6 +1,7 @@
 package parser;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.security.MessageDigest;
 
 public class TransactionInput {
@@ -27,6 +28,7 @@ public class TransactionInput {
     	
     	TransactionInput txIn = new TransactionInput();
     	ByteBuffer txInBuffer = ByteBuffer.wrap(transactionInputBytes);
+    	txInBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         byte[] vi = new byte[9];
         txInBuffer.get(vi);

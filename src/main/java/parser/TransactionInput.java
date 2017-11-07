@@ -6,6 +6,7 @@ public class TransactionInput {
     public /*var*/int scriptLength;
     public byte[] scriptSig;
     public int sequenceNo;
+    public long inputSize;
 
     public TransactionInput() {
         prevTransactionHash = new byte[32];

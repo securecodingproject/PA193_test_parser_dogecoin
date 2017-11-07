@@ -9,7 +9,7 @@ public class TransactionOutput {
     public byte[] script;
     public long outputSize;
 
-    public TransactionOutput parseTransactionOutput(byte[] transactionOutputBytes) {
+    public static TransactionOutput parseTransactionOutput(byte[] transactionOutputBytes) {
         if (transactionOutputBytes == null)
             return null;
 

@@ -14,22 +14,17 @@ public class Transaction {
     public List<TransactionOutput> outputs;
     public static int lockTimeLength = 4;
     public byte[] lockTime;
+    public int transactionSize;
 
     public Transaction() {
         lockTime = new byte[lockTimeLength];
     }
 
-    /**
-     * parseTransaction parses an array of bytes containing a transaction into a Transaction object.
-     *
-     * @param transactionBytes array of bytes containing a transaction
-     * @return parsed Transaction object, or null if failed.
-     */
-    public static Transaction parseTransaction(byte[] transactionBytes) {
-        if (transactionBytes == null)
+    public static Transaction parseFirstTransactionFromBytes(byte[] transactionListBytes) {
+        if (transactionListBytes == null)
             return null;
 
-        ByteBuffer txBuffer = ByteBuffer.wrap(transactionBytes);
+        ByteBuffer txBuffer = ByteBuffer.wrap(transactionListBytes);
         txBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         Transaction tx = new Transaction();
@@ -47,36 +42,48 @@ public class Transaction {
             // parse txIn then add to txInList
         }
 
+        // sum txIn lengths
+        int sumTxInLength = 0;
+        for (TransactionInput txIn : tx.inputs)
+            sumTxInLength += txIn.inputSize;
 
         txBuffer.get(vi);
         tx.outCounter = new VarInt(vi, 0);
         // jump to after varint
         txBuffer.position(txBuffer.position() - (9 - tx.outCounter.size));
 
-        for (int i = 0; i < tx.outCounter.value; i++) {
-            // parse txOut then add to txOutList
+        List<TransactionOutput> txOutList = new ArrayList<TransactionOutput>();
+        // should be equal to txBuffer.limit() - txBuffer.position()
+        int remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - 4 - tx.inCounter.size - sumTxInLength;
+        long remainingTxOutToParse = tx.outCounter.value;
+        for (long i = remainingTxOutToParse; i > 0; i--) {
+            int initialPos = txBuffer.position();
+
+            // get remaining bytes
+            byte[] remainingBytes = new byte[remainingNumberOfBytesOfTxBuffer];
+            txBuffer.get(remainingBytes);
+
+            TransactionOutput txOut = TransactionOutput.parseTransactionOutput(remainingBytes);
+            if (txOut == null)
+                return null;
+
+            txOutList.add(txOut);
+
+            remainingNumberOfBytesOfTxBuffer -= txOut.outputSize;
+
+            txBuffer.position(initialPos + (int)txOut.outputSize);
         }
+
+        // sum txOut lengths
+        int sumTxOutLength = 0;
+        for (TransactionOutput txOut : tx.outputs)
+            sumTxOutLength += txOut.outputSize;
 
         byte[] lockTimeBytes = new byte[lockTimeLength];
         txBuffer.get(lockTimeBytes);
 
+        tx.transactionSize = 4 + tx.inCounter.size + tx.outCounter.size + sumTxInLength + sumTxOutLength + lockTimeLength;
+
         return tx;
-    }
-
-    /**
-     * parseTransactionList parses an array of bytes array of bytes containing a list of transactions into a List<Transaction> object.
-     *
-     * @param transactionListBytes array of bytes containing several transactions
-     * @return parsed List<Transaction> object.
-     */
-    public static List<Transaction> parseTransactionList(byte[] transactionListBytes, VarInt transactionCounter) {
-        ByteBuffer txListBuffer = ByteBuffer.wrap(transactionListBytes);
-        txListBuffer.order(ByteOrder.LITTLE_ENDIAN);
-
-        List<Transaction> txList = new ArrayList<Transaction>();
-
-        // parse transactions
-
-        return null;
     }
 }

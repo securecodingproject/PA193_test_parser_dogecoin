@@ -2,6 +2,7 @@ package parser;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.List;
 
 // https://en.bitcoin.it/wiki/Block
@@ -68,10 +69,27 @@ public class Block {
         blockBuffer.position(blockBuffer.position() - (9 -  block.transactionCounter.size));
         lengthUntilEndOfBlock -= block.transactionCounter.size;
 
-        // parse transactions
-        byte[] transactionListBytes = new byte[lengthUntilEndOfBlock];
-        blockBuffer.get(transactionListBytes);
-        block.transactions = Transaction.parseTransactionList(transactionListBytes, block.transactionCounter);
+
+        block.transactions = new ArrayList<Transaction>();
+        long remainingTransactionsToParse = block.transactionCounter.value;
+        for (long i = remainingTransactionsToParse; i > 0; i--) {
+            int initialPos = blockBuffer.position();
+
+            // get remaining bytes
+            byte[] remainingTransactionsBytes = new byte[lengthUntilEndOfBlock];
+            blockBuffer.get(remainingTransactionsBytes);
+
+            Transaction tx = Transaction.parseFirstTransactionFromBytes(remainingTransactionsBytes);
+            if (tx == null)
+                return null;
+
+            block.transactions.add(tx);
+
+            lengthUntilEndOfBlock -= tx.transactionSize;
+
+            // move buffer mark to beginning of next transaction
+            blockBuffer.position(initialPos + tx.transactionSize);
+        }
 
         return block;
     }

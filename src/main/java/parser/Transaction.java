@@ -68,7 +68,6 @@ public class Transaction {
         txBuffer.position(txBuffer.position() - (9 - tx.outCounter.size));
 
         List<TransactionOutput> txOutList = new ArrayList<TransactionOutput>();
-        // should be equal to txBuffer.limit() - txBuffer.position()
         remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - txBuffer.position();
         long remainingTxOutToParse = tx.outCounter.value;
         for (long i = remainingTxOutToParse; i > 0; i--) {

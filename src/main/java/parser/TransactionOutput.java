@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 public class TransactionOutput {
     public Satoshi value;
     // TODO: figure out VarInt protocol
-    public /*var*/int scriptLength;
+    public VarInt scriptLength;
     public byte[] script;
 
     public TransactionOutput parseTransactionOutput(byte[] transactionOutputBytes) {
@@ -19,10 +19,13 @@ public class TransactionOutput {
         txOutBuffer.get(tempArray);
         value = new Satoshi(tempArray);
 
-        // TODO: parse varint (for now its just hard coded 8 bytes, not gonna work)
-        txOut.scriptLength = 8;
+        byte[] vi = new byte[9];
+        txOutBuffer.get(vi);
+        txOut.scriptLength = new VarInt(vi, 0);
+        // casting to int is very wrong, don't know what to do instead
+        txOutBuffer.position(txOutBuffer.position() - (9 - (int)txOut.scriptLength.value));
 
-        txOut.script = new byte[txOut.scriptLength];
+        txOut.script = new byte[(int)txOut.scriptLength.value];
         txOutBuffer.get(txOut.script);
 
         return txOut;

@@ -9,7 +9,7 @@ public class Block {
     public static final byte[] magicNumber = new byte[] { (byte)0xC0, (byte)0xC0, (byte)0xC0, (byte)0xC0 };
     public int blockSize;
     public BlockHeader blockHeader;
-    public int transactionCounter;
+    public VarInt transactionCounter;
     public List<Transaction> transactions;
 
     /**
@@ -62,8 +62,11 @@ public class Block {
         lengthUntilEndOfBlock -= BlockHeader.length;
 
         // parse transaction counter
-        block.transactionCounter = blockBuffer.getInt();
-        lengthUntilEndOfBlock -= 4;
+        byte[] vi = new byte[9];
+        blockBuffer.get(vi);
+        block.transactionCounter = new VarInt(vi, 0);
+        blockBuffer.position(blockBuffer.position() - (9 -  (int)block.transactionCounter.size));
+        lengthUntilEndOfBlock -= block.transactionCounter.size;
 
         // parse transactions
         byte[] transactionListBytes = new byte[lengthUntilEndOfBlock];

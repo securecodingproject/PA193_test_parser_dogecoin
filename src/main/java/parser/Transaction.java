@@ -37,9 +37,24 @@ public class Transaction {
         txBuffer.position(txBuffer.position() - (9 - tx.inCounter.size));
 
         List<TransactionInput> txInList = new ArrayList<TransactionInput>();
+        int remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - txBuffer.position();
+        long remainingTxInToParse = tx.outCounter.value;
+        for (long i = remainingTxInToParse; i > 0; i--) {
+            int initialPos = txBuffer.position();
 
-        for (int i = 0; i < tx.inCounter.value; i++) {
-            // parse txIn then add to txInList
+            // get remaining bytes
+            byte[] remainingBytes = new byte[remainingNumberOfBytesOfTxBuffer];
+            txBuffer.get(remainingBytes);
+
+            TransactionInput txIn = TransactionInput.parseTransactionInput(remainingBytes);
+            if (txIn == null)
+                return null;
+
+            txInList.add(txIn);
+
+            remainingNumberOfBytesOfTxBuffer -= txIn.;
+
+            txBuffer.position(initialPos + (int)txIn.inputSize);
         }
 
         // sum txIn lengths
@@ -54,7 +69,7 @@ public class Transaction {
 
         List<TransactionOutput> txOutList = new ArrayList<TransactionOutput>();
         // should be equal to txBuffer.limit() - txBuffer.position()
-        int remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - 4 - tx.inCounter.size - sumTxInLength;
+        remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - txBuffer.position();
         long remainingTxOutToParse = tx.outCounter.value;
         for (long i = remainingTxOutToParse; i > 0; i--) {
             int initialPos = txBuffer.position();

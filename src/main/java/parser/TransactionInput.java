@@ -17,7 +17,7 @@ public class TransactionInput {
      * @param transactionInputBytes byte array containing transaction input
      * @return parsed TransactionInput object
      */
-    public TransactionInput parseTransactionInput(byte[] transactionInputBytes) {
+    public static TransactionInput parseTransactionInput(byte[] transactionInputBytes) {
         return null;
     }
 }

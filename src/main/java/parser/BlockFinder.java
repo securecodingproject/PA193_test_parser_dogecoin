@@ -6,6 +6,7 @@ import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class BlockFinder {
 
@@ -38,7 +39,7 @@ public class BlockFinder {
             // get hash, compare
             byte[] hash = new byte[BlockHeader.hashLength];
             bytesBuffer.get(hash);
-            if (Helpers.isSame(hash, merkleRootHash)) {
+            if (Arrays.equals(hash, merkleRootHash)) {
                 bytesBuffer.position(initialPosition);
                 byte[] block = new byte[8 + blockSize];
                 bytesBuffer.get(block);

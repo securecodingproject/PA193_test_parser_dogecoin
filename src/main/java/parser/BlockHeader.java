@@ -3,6 +3,7 @@ package parser;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Date;
 
 // https://en.bitcoin.it/wiki/Block_hashing_algorithm

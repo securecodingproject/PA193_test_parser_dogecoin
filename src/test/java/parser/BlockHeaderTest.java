@@ -1,6 +1,9 @@
 package parser;
 
 import org.junit.Test;
+
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class BlockHeaderTest {
@@ -45,8 +48,8 @@ public class BlockHeaderTest {
             }
 
             assertTrue(bh.version == 1);
-            assertTrue(Helpers.isSame(bh.hashPrevBlock, tcs[i].expected.hashPrevBlock));
-            assertTrue(Helpers.isSame(bh.hashMerkleRoot, tcs[i].expected.hashMerkleRoot));
+            assertTrue(Arrays.equals(bh.hashPrevBlock, tcs[i].expected.hashPrevBlock));
+            assertTrue(Arrays.equals(bh.hashMerkleRoot, tcs[i].expected.hashMerkleRoot));
             assertTrue(bh.timeInSecondsSinceEpoch == tcs[i].expected.timeInSecondsSinceEpoch);
             assertTrue(bh.target == tcs[i].expected.target);
             assertTrue(bh.nonce == tcs[i].expected.nonce);

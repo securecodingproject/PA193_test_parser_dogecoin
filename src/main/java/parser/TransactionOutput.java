@@ -22,7 +22,6 @@ public class TransactionOutput {
         byte[] vi = new byte[9];
         txOutBuffer.get(vi);
         txOut.scriptLength = new VarInt(vi, 0);
-        // casting to int is very wrong, don't know what to do instead
         txOutBuffer.position(txOutBuffer.position() - (9 - txOut.scriptLength.size));
 
         txOut.script = new byte[(int)txOut.scriptLength.value];

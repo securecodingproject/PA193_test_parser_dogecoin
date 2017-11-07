@@ -93,4 +93,21 @@ public class Block {
 
         return block;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Block size: ");
+        sb.append(this.blockSize);
+        sb.append("\r\nBlock header: ");
+        sb.append(this.blockHeader.toString());
+        sb.append("\r\n Number of transactions: ");
+        sb.append(this.transactionCounter.value);
+        sb.append("\r\nTransactions:\r\n");
+        for (Transaction tx : this.transactions) {
+            sb.append(tx.toString());
+        }
+
+        return sb.toString();
+    }
 }

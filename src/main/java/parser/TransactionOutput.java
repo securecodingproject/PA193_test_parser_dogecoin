@@ -32,4 +32,14 @@ public class TransactionOutput {
 
         return txOut;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Value: ");
+        sb.append(value.asLong());
+        sb.append("\r\nScript: ");
+        sb.append(Helpers.byteArrayToHexString(this.script));
+        return sb.toString();
+    }
 }

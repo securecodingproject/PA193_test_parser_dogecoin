@@ -21,7 +21,7 @@ public class VarInt {
     // Creates a new VarInt with value parsed from the specified offset of the given buffer.
     // 'buf' is the buffer containing the value
     // 'offset' is the offset of the value
-    public VarInt(byte[] buf, int offset){
+    public VarInt(byte[] buf, int offset) {
         int first = 0xFF & buf[offset];
         if (first < 253) {
             value = first;
@@ -47,5 +47,10 @@ public class VarInt {
                     ((0xFFL & buf[offset + 8]) << 56);
             size = 9; // 1 marker + 8 data
         }
+    }
+
+    @Override
+    public String toString() {
+        return Double.toString(value);
     }
 }

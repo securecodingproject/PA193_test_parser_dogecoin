@@ -100,4 +100,33 @@ public class Transaction {
 
         return tx;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Version: ");
+        sb.append(this.version);
+
+        sb.append("\r\nNumber of transaction inputs: ");
+        sb.append(this.outCounter.value);
+        sb.append("\r\nTransaction inputs:\r\n");
+        for (TransactionInput txIn : this.inputs) {
+            sb.append("\t");
+            sb.append(txIn.toString());
+            sb.append("\r\n");
+        }
+
+        sb.append("\r\nNumber of transaction outputs: ");
+        sb.append(this.outCounter.value);
+        sb.append("\r\nTransaction outputs:\r\n");
+        for (TransactionOutput txOut : this.outputs) {
+            sb.append("\t");
+            sb.append(txOut.toString());
+            sb.append("\r\n");
+        }
+
+        sb.append(Helpers.byteArrayToHexString(this.lockTime));
+
+        return sb.toString();
+    }
 }

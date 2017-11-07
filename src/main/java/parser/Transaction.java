@@ -108,7 +108,7 @@ public class Transaction {
         sb.append(Integer.toUnsignedString(this.version));
 
         sb.append("\r\nNumber of transaction inputs: ");
-        sb.append(Long.toUnsignedString(this.outCounter.value));
+        sb.append(Long.toUnsignedString(this.inCounter.value));
         sb.append("\r\nTransaction inputs:\r\n");
         for (TransactionInput txIn : this.inputs) {
             sb.append("\t");

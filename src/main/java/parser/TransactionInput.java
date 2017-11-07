@@ -61,6 +61,9 @@ public class TransactionInput {
         StringBuilder sb = new StringBuilder();
         sb.append("\r\nScript: ");
         sb.append(Helpers.byteArrayToHexString(this.script));
+        sb.append("\r\nScript Length: ");
+        sb.append(Long.toUnsignedString(this.scriptLength.value));
+        
         return sb.toString();
     }
 }

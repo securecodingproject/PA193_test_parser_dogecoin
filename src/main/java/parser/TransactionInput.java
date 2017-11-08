@@ -2,7 +2,6 @@ package parser;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.security.MessageDigest;
 
 public class TransactionInput {
     public byte[] prevTransactionHash;

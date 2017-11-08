@@ -1,5 +1,9 @@
 package parser;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Helpers {
 
     // https://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java
@@ -24,5 +28,29 @@ public class Helpers {
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    // https://stackoverflow.com/questions/2137755/how-do-i-reverse-an-int-array-in-java
+    public static byte[] reverseByteArray(byte[] array) {
+        int left = 0;
+        int right = array.length - 1;
+        byte[] tmpByteArray = Arrays.copyOf(array, array.length);
+
+        while( left < right ) {
+            // swap the values at the left and right indices
+            byte temp = tmpByteArray[left];
+            tmpByteArray[left] = tmpByteArray[right];
+            tmpByteArray[right] = temp;
+
+            // move the left and right index pointers in toward the center
+            left++;
+            right--;
+        }
+
+        return tmpByteArray;
+    }
+
+    public static String reversedByteArrayAsString(byte[] ba) {
+        return byteArrayToHexString(Helpers.reverseByteArray(ba));
     }
 }

@@ -59,9 +59,9 @@ public class BlockHeader {
         sb.append("Version: ");
         sb.append(Integer.toUnsignedString(this.version));
         sb.append("\r\nPrevious block hash: ");
-        sb.append(Helpers.byteArrayToHexString(this.hashPrevBlock));
+        sb.append(Helpers.reversedByteArrayAsString(this.hashPrevBlock));
         sb.append("\r\nMerkle root hash of transactions: ");
-        sb.append(Helpers.byteArrayToHexString(this.hashMerkleRoot));
+        sb.append(Helpers.reversedByteArrayAsString(this.hashMerkleRoot));
         sb.append("\r\nTime: ");
         sb.append(this.time.toString());
         sb.append("\r\nTarget: ");

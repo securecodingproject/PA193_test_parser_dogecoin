@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class TransactionOutput {
-    public Satoshi value;
+    public long value;
     // TODO: figure out VarInt protocol
     public VarInt scriptLength;
     public byte[] script;
@@ -18,9 +18,7 @@ public class TransactionOutput {
         ByteBuffer txOutBuffer = ByteBuffer.wrap(transactionOutputBytes);
         txOutBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        byte[] tempArray = new byte[8];
-        txOutBuffer.get(tempArray);
-        txOut.value = new Satoshi(tempArray);
+        txOut.value = txOutBuffer.getLong();
 
         byte[] vi = new byte[9];
         txOutBuffer.get(vi);
@@ -39,7 +37,10 @@ public class TransactionOutput {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Value: ");
-        sb.append(Long.toUnsignedString(value.asLong()));
+        sb.append(Long.toUnsignedString(this.value));
+        sb.append(" Satoshis");
+        sb.append("\r\nScript Length: ");
+        sb.append(Long.toUnsignedString(this.scriptLength.value));
         sb.append("\r\nScript: ");
         sb.append(Helpers.byteArrayToHexString(this.script));
         return sb.toString();

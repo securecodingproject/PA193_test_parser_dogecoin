@@ -31,7 +31,7 @@ public class TransactionInput {
         
         txInBuffer.get(txIn.prevTransactionHash);
         txIn.prevTransactionOutputIndex = txInBuffer.getInt();
-        
+
         byte[] vi = new byte[9];
         txInBuffer.get(vi);
         txIn.scriptLength = new VarInt(vi, 0);
@@ -39,7 +39,7 @@ public class TransactionInput {
 
         txIn.script = new byte[(int)txIn.scriptLength.value];
         txInBuffer.get(txIn.script);
-        
+
         txIn.sequenceNumber = txInBuffer.getInt();
         
         txIn.inputSize = 32 + 4 + txIn.scriptLength.size + txIn.scriptLength.value + 4;
@@ -50,11 +50,16 @@ public class TransactionInput {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\r\nScript: ");
-        sb.append(Helpers.byteArrayToHexString(this.script));
-        sb.append("\r\nScript Length: ");
+        sb.append("\r\nPrevious transaction hash: ");
+        sb.append(Helpers.reversedByteArrayAsString(this.prevTransactionHash));
+        sb.append("\r\nPrevious transaction out index: ");
+        sb.append(Integer.toUnsignedString(this.prevTransactionOutputIndex));
+        sb.append(")\r\nScript Length: ");
         sb.append(Long.toUnsignedString(this.scriptLength.value));
-        
+        sb.append("\r\nScript: ");
+        sb.append(Helpers.reversedByteArrayAsString(this.script));
+        sb.append("\r\nSequence number: ");
+        sb.append(Integer.toUnsignedString(this.sequenceNumber));
         return sb.toString();
     }
 }

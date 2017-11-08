@@ -125,7 +125,7 @@ public class Transaction {
             sb.append("\r\n");
         }
 
-        sb.append(Helpers.byteArrayToHexString(this.lockTime));
+        sb.append(Helpers.reversedByteArrayAsString(this.lockTime));
 
         return sb.toString();
     }

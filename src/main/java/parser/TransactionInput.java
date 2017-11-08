@@ -48,16 +48,6 @@ public class TransactionInput {
         return txIn;
     }
     
-    static protected byte[] doubleHash(byte[] bytes) throws Exception {
-    	// Get the double hash of byte array
-    	byte[] hash;
-    	MessageDigest sha = MessageDigest.getInstance("SHA-256");
-    	sha.update(bytes);
-    	hash = sha.digest();
-    	sha.update(hash);
-    	return sha.digest();
-    }
-    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -29,7 +29,10 @@ public class TransactionInput {
     	TransactionInput txIn = new TransactionInput();
     	ByteBuffer txInBuffer = ByteBuffer.wrap(transactionInputBytes);
     	txInBuffer.order(ByteOrder.LITTLE_ENDIAN);
-
+        
+        txInBuffer.get(txIn.prevTransactionHash);
+        txIn.prevTransactionOutputIndex = txInBuffer.getInt();
+        
         byte[] vi = new byte[9];
         txInBuffer.get(vi);
         txIn.scriptLength = new VarInt(vi, 0);
@@ -38,24 +41,11 @@ public class TransactionInput {
         txIn.script = new byte[(int)txIn.scriptLength.value];
         txInBuffer.get(txIn.script);
         
-        txInBuffer.get(txIn.prevTransactionHash);
-        txIn.prevTransactionOutputIndex = txInBuffer.getInt();
-        
         txIn.sequenceNumber = txInBuffer.getInt();
         
         txIn.inputSize = 32 + 4 + txIn.scriptLength.size + txIn.scriptLength.value + 4;
     	
         return txIn;
-    }
-    
-    static protected byte[] doubleHash(byte[] bytes) throws Exception {
-    	// Get the double hash of byte array
-    	byte[] hash;
-    	MessageDigest sha = MessageDigest.getInstance("SHA-256");
-    	sha.update(bytes);
-    	hash = sha.digest();
-    	sha.update(hash);
-    	return sha.digest();
     }
     
     @Override

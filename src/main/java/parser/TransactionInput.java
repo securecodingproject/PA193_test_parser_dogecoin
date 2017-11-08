@@ -54,6 +54,8 @@ public class TransactionInput {
         sb.append(Helpers.reversedByteArrayAsString(this.prevTransactionHash));
         sb.append("\r\nPrevious transaction out index: ");
         sb.append(Integer.toUnsignedString(this.prevTransactionOutputIndex));
+        sb.append(" (hex: ");
+        sb.append(Integer.toHexString(this.prevTransactionOutputIndex));
         sb.append(")\r\nScript Length: ");
         sb.append(Long.toUnsignedString(this.scriptLength.value));
         sb.append("\r\nScript: ");

@@ -3,6 +3,7 @@ package parser;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // https://en.bitcoin.it/wiki/Block
@@ -21,14 +22,7 @@ public class Block {
      * @return value indicates whether magic number is correct
      */
     public static boolean checkMagicNumber(byte[] magicNumber) {
-        if (magicNumber.length != Block.magicNumber.length)
-            return false;
-
-        for (int i = 0; i < Block.magicNumber.length; i++)
-            if (magicNumber[i] != Block.magicNumber[i])
-                return false;
-
-        return true;
+        return Arrays.equals(magicNumber, Block.magicNumber);
     }
 
     /**
@@ -38,13 +32,12 @@ public class Block {
      * @return parsed Block object
      */
     public static Block parseBlock(byte[] blockBytes) {
-        // create byte buffer, set little endian byte order
         ByteBuffer blockBuffer = ByteBuffer.wrap(blockBytes);
         blockBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         Block block = new Block();
 
-        // parse magic number
+        // check magic number
         byte[] magicNumberBytes = new byte[Block.magicNumber.length];
         blockBuffer.get(magicNumberBytes);
         if (!Block.checkMagicNumber(magicNumberBytes))
@@ -52,7 +45,7 @@ public class Block {
 
         // parse block size
         block.blockSize = blockBuffer.getInt();
-        if (block.blockSize != (blockBuffer.limit() - Block.magicNumber.length))
+        if (block.blockSize != (blockBuffer.limit() - Block.magicNumber.length - 4))
             return null;
         int lengthUntilEndOfBlock = block.blockSize;
 
@@ -99,8 +92,9 @@ public class Block {
         StringBuilder sb = new StringBuilder();
         sb.append("Block size: ");
         sb.append(Integer.toUnsignedString(this.blockSize));
-        sb.append("\r\nBlock header: ");
+        sb.append("\r\nBlock header: \r\n");
         sb.append(this.blockHeader.toString());
+
         sb.append("\r\n Number of transactions: ");
         sb.append(Long.toUnsignedString(this.transactionCounter.value));
         sb.append("\r\nTransactions:\r\n");

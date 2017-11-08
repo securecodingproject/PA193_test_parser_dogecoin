@@ -18,6 +18,8 @@ public class Transaction {
 
     public Transaction() {
         lockTime = new byte[lockTimeLength];
+        inputs = new ArrayList<>();
+        outputs = new ArrayList<>();
     }
 
     public static Transaction parseFirstTransactionFromBytes(byte[] transactionListBytes) {
@@ -36,9 +38,8 @@ public class Transaction {
         // jump to after varint
         txBuffer.position(txBuffer.position() - (9 - tx.inCounter.size));
 
-        List<TransactionInput> txInList = new ArrayList<TransactionInput>();
         int remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - txBuffer.position();
-        long remainingTxInToParse = tx.outCounter.value;
+        long remainingTxInToParse = tx.inCounter.value;
         for (long i = remainingTxInToParse; i > 0; i--) {
             int initialPos = txBuffer.position();
 
@@ -50,7 +51,7 @@ public class Transaction {
             if (txIn == null)
                 return null;
 
-            txInList.add(txIn);
+            tx.inputs.add(txIn);
 
             remainingNumberOfBytesOfTxBuffer -= txIn.inputSize;
 
@@ -67,7 +68,6 @@ public class Transaction {
         // jump to after varint
         txBuffer.position(txBuffer.position() - (9 - tx.outCounter.size));
 
-        List<TransactionOutput> txOutList = new ArrayList<TransactionOutput>();
         remainingNumberOfBytesOfTxBuffer = txBuffer.limit() - txBuffer.position();
         long remainingTxOutToParse = tx.outCounter.value;
         for (long i = remainingTxOutToParse; i > 0; i--) {
@@ -81,7 +81,7 @@ public class Transaction {
             if (txOut == null)
                 return null;
 
-            txOutList.add(txOut);
+            tx.outputs.add(txOut);
 
             remainingNumberOfBytesOfTxBuffer -= txOut.outputSize;
 
@@ -109,9 +109,8 @@ public class Transaction {
 
         sb.append("\r\nNumber of transaction inputs: ");
         sb.append(Long.toUnsignedString(this.inCounter.value));
-        sb.append("\r\nTransaction inputs:\r\n");
+        sb.append("\r\n\r\nTransaction inputs:");
         for (TransactionInput txIn : this.inputs) {
-            sb.append("\t");
             sb.append(txIn.toString());
             sb.append("\r\n");
         }
@@ -120,11 +119,11 @@ public class Transaction {
         sb.append(Long.toUnsignedString(this.outCounter.value));
         sb.append("\r\nTransaction outputs:\r\n");
         for (TransactionOutput txOut : this.outputs) {
-            sb.append("\t");
             sb.append(txOut.toString());
             sb.append("\r\n");
         }
 
+        sb.append("\r\nTransaction lock_time: ");
         sb.append(Helpers.reversedByteArrayAsString(this.lockTime));
 
         return sb.toString();

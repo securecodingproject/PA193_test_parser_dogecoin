@@ -50,7 +50,8 @@ public class TransactionInput {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\r\nPrevious transaction hash: ");
+        sb.append("--- begin transaction input ---\r\n");
+        sb.append("Previous transaction hash: ");
         sb.append(Helpers.reversedByteArrayAsString(this.prevTransactionHash));
         sb.append("\r\nPrevious transaction out index: ");
         sb.append(Integer.toUnsignedString(this.prevTransactionOutputIndex));
@@ -62,6 +63,9 @@ public class TransactionInput {
         sb.append(Helpers.reversedByteArrayAsString(this.script));
         sb.append("\r\nSequence number: ");
         sb.append(Integer.toUnsignedString(this.sequenceNumber));
+        sb.append(" (hex: ");
+        sb.append(Integer.toHexString(this.sequenceNumber));
+        sb.append(")\r\n--- end transaction input ---");
         return sb.toString();
     }
 }

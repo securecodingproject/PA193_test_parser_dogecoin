@@ -56,6 +56,7 @@ public class BlockHeader {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("\r\n--- begin block header --- \r\n");
         sb.append("Version: ");
         sb.append(Integer.toUnsignedString(this.version));
         sb.append("\r\nPrevious block hash: ");
@@ -68,6 +69,7 @@ public class BlockHeader {
         sb.append(Integer.toUnsignedString(this.target));
         sb.append("\r\nNonce: ");
         sb.append(Integer.toUnsignedString(this.nonce));
+        sb.append("\r\n--- end block header --- \r\n");
 
         return sb.toString();
     }

@@ -36,13 +36,14 @@ public class TransactionOutput {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Value: ");
+        sb.append("--- begin transaction output ---\r\nValue: ");
         sb.append(Long.toUnsignedString(this.value));
         sb.append(" Satoshis");
         sb.append("\r\nScript Length: ");
         sb.append(Long.toUnsignedString(this.scriptLength.value));
         sb.append("\r\nScript: ");
         sb.append(Helpers.byteArrayToHexString(this.script));
+        sb.append("\r\n--- end transaction output ---");
         return sb.toString();
     }
 }

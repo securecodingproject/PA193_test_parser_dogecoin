@@ -104,27 +104,30 @@ public class Transaction {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Version: ");
+        sb.append("\r\n--- begin transaction ---\r\nVersion: ");
         sb.append(Integer.toUnsignedString(this.version));
 
         sb.append("\r\nNumber of transaction inputs: ");
         sb.append(Long.toUnsignedString(this.inCounter.value));
-        sb.append("\r\n\r\nTransaction inputs:");
+        sb.append("\r\n\r\n--- begin transaction inputs ---\r\n");
         for (TransactionInput txIn : this.inputs) {
             sb.append(txIn.toString());
             sb.append("\r\n");
         }
+        sb.append("--- end transaction inputs ---\r\n");
 
         sb.append("\r\nNumber of transaction outputs: ");
         sb.append(Long.toUnsignedString(this.outCounter.value));
-        sb.append("\r\nTransaction outputs:\r\n");
+        sb.append("\r\n\r\n--- begin transaction outputs ---\r\n");
         for (TransactionOutput txOut : this.outputs) {
             sb.append(txOut.toString());
             sb.append("\r\n");
         }
+        sb.append("--- end transaction outputs ---\r\n");
 
         sb.append("\r\nTransaction lock_time: ");
         sb.append(Helpers.reversedByteArrayAsString(this.lockTime));
+        sb.append("\r\n--- end transaction ---\r\n");
 
         return sb.toString();
     }

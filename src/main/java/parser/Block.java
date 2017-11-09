@@ -90,18 +90,18 @@ public class Block {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Block size: ");
+        sb.append("--- begin block ---\r\nBlock size: ");
         sb.append(Integer.toUnsignedString(this.blockSize));
-        sb.append("\r\nBlock header: \r\n");
         sb.append(this.blockHeader.toString());
 
-        sb.append("\r\n Number of transactions: ");
+        sb.append("\r\nNumber of transactions: ");
         sb.append(Long.toUnsignedString(this.transactionCounter.value));
-        sb.append("\r\nTransactions:\r\n");
+        sb.append("\r\n\r\nTransactions:\r\n");
         for (Transaction tx : this.transactions) {
             sb.append(tx.toString());
         }
 
+        sb.append("--- end block ---\r\n");
         return sb.toString();
     }
 }

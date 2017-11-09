@@ -1,5 +1,6 @@
 package parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -66,6 +67,10 @@ public class BlockFinder {
             return null;
 
         if (merkleRootHash.length != BlockHeader.hashLength)
+            return null;
+
+        File f = new File(filepath);
+        if (!f.exists() || f.isDirectory())
             return null;
 
         Path path = Paths.get(filepath);

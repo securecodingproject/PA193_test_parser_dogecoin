@@ -11,7 +11,7 @@ public class BlockTest {
 
         Block out = Block.parseBlock(input);
 
-        assertNotEquals(out, null);
+        assertNotEquals(null, out);
         assertEquals(224, out.blockSize);
         assertEquals((long)1, out.transactionCounter.value);
     }
@@ -25,9 +25,7 @@ public class BlockTest {
 
         assertNotEquals(null, out);
         assertEquals(11126, out.blockSize);
-        assertEquals(37, out.transactionCounter.value);
-        System.out.println(out);
-        //assertEquals((long)1, out.transactionCounter.value);
+        assertEquals((long)37, out.transactionCounter.value);
     }
 
     @Test

@@ -10,29 +10,34 @@ public class TransactionInputTest {
     public void TestParseTransactionInput() {
         byte[] inputAsByteArray = Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000FFFFFFFF0E04BCEDA3520101062F503253482FFFFFFFFF");
 
-        TransactionInput in = TransactionInput.parseTransactionInput(inputAsByteArray);
+        TransactionInput out = TransactionInput.parseTransactionInput(inputAsByteArray);
 
-        // TODO: asserts
-        assertArrayEquals(in.prevTransactionHash, Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000"));
-        assertEquals(in.prevTransactionOutputIndex, -1);
-        assertEquals(in.scriptLength.value, 14);
-        assertArrayEquals(in.script, Helpers.hexStringToByteArray("04BCEDA3520101062F503253482F"));
-        assertEquals(in.sequenceNumber, -1);
-        assertEquals(in.inputSize, (long)inputAsByteArray.length);
+        assertArrayEquals(Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000"), out.prevTransactionHash);
+        assertEquals(-1, out.prevTransactionOutputIndex);
+        assertEquals(14, out.scriptLength.value);
+        assertArrayEquals(Helpers.hexStringToByteArray("04BCEDA3520101062F503253482F"), out.script);
+        assertEquals(-1, out.sequenceNumber);
+        assertEquals((long)inputAsByteArray.length, out.inputSize);
     }
 
     @Test
     public void TestParseTransactionInputShouldOnlyParseOne() {
         byte[] inputAsByteArray = Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000FFFFFFFF0E04BCEDA3520101062F503253482FFFFFFFFF0000000000000000000000000000000000000000000000000000000000000000FFFFFFFF0E04BCEDA3520101062F503253482FFFFFFFFF");
 
-        TransactionInput in = TransactionInput.parseTransactionInput(inputAsByteArray);
+        TransactionInput out = TransactionInput.parseTransactionInput(inputAsByteArray);
 
-        // TODO: asserts
-        assertArrayEquals(in.prevTransactionHash, Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000"));
-        assertEquals(in.prevTransactionOutputIndex, -1);
-        assertEquals(in.scriptLength.value, 14);
-        assertArrayEquals(in.script, Helpers.hexStringToByteArray("04BCEDA3520101062F503253482F"));
-        assertEquals(in.sequenceNumber, -1);
-        assertEquals(in.inputSize, ((long)inputAsByteArray.length)/2);
+        assertArrayEquals(Helpers.hexStringToByteArray("0000000000000000000000000000000000000000000000000000000000000000"), out.prevTransactionHash);
+        assertEquals(-1, out.prevTransactionOutputIndex);
+        assertEquals(14, out.scriptLength.value);
+        assertArrayEquals(Helpers.hexStringToByteArray("04BCEDA3520101062F503253482F"), out.script);
+        assertEquals(-1, out.sequenceNumber);
+        assertEquals(((long)inputAsByteArray.length)/2, out.inputSize);
+    }
+
+    @Test
+    public void TestParseTransactionInputGivenNullShouldReturnNull() {
+        TransactionInput out = TransactionInput.parseTransactionInput(null);
+
+        assertEquals(null, out);
     }
 }

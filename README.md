@@ -11,7 +11,7 @@ Building the project is as simple as running the following command from the proj
 
 This will result in a jar file created in the target folder. You can run the file as such:
 
-`java -jar target/PA_test_parser_dogecoin-0.1 <merkle root hash to look for> <file to look for it in>`
+`java -jar target/PA_test_parser_dogecoin-0.1.jar <merkle root hash to look for> <file to look for it in>`
 
 Tests can be run with:
 

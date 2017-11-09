@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 public class TransactionTest {
 
     @Test
@@ -13,5 +15,13 @@ public class TransactionTest {
         Transaction out = Transaction.parseFirstTransactionFromBytes(input);
 
         // TODO: asserts
+        assertEquals(out.version, 1);
+        assertEquals(out.inCounter.value, 1);
+        //List<TransactionInput> inputs
+        assertEquals(out.outCounter.value, 1);
+        //List<TransactionOutput> ouputs
+        //lockTimeLength
+        assertArrayEquals(out.lockTime, Helpers.hexStringToByteArray("00000000"));
+        assertEquals(out.transactionSize, (int)input.length);
     }
 }

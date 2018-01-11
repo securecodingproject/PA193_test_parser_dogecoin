@@ -5,11 +5,10 @@ import java.nio.ByteOrder;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
-
+import java.lang.*;
 // https://en.bitcoin.it/wiki/Block_hashing_algorithm
 public class BlockHeader {
-    public static int length = 4 + 32 + 32 + 4 + 4 + 4;
-
+    public static final int length = 4 + 32 + 32 + 4 + 4 + 4;
     public int version;
     // scrypt hash length
     public static final short hashLength = 32;
@@ -46,13 +45,14 @@ public class BlockHeader {
         blockHeaderBuffer.get(blockHeader.hashPrevBlock);
         blockHeaderBuffer.get(blockHeader.hashMerkleRoot);
         blockHeader.timeInSecondsSinceEpoch = blockHeaderBuffer.getInt();
-        blockHeader.time = new Date((long)blockHeader.timeInSecondsSinceEpoch * 1000);
+	    blockHeader.time = new Date((long)blockHeader.timeInSecondsSinceEpoch * 1000);
         blockHeader.target = blockHeaderBuffer.getInt();
         blockHeader.nonce = blockHeaderBuffer.getInt();
 
         return blockHeader;
     }
 
+	
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

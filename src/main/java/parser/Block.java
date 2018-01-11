@@ -5,10 +5,11 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.lang.*;
 
 // https://en.bitcoin.it/wiki/Block
 public class Block {
-    public static final byte[] magicNumber = new byte[] { (byte)0xC0, (byte)0xC0, (byte)0xC0, (byte)0xC0 };
+    static final byte[] magicNumber = new byte[] { (byte)0xC0, (byte)0xC0, (byte)0xC0, (byte)0xC0 };
     public int blockSize;
     public BlockHeader blockHeader;
     public VarInt transactionCounter;
@@ -25,6 +26,16 @@ public class Block {
         return Arrays.equals(magicNumber, Block.magicNumber);
     }
 
+    //function to check block validity
+    public static boolean checkBlockTime(long blk_time) {
+        long curTime=System.currentTimeMillis()/1000;
+		long starttime = 1386325540;    // Time since epoch of 06 Dec 2013, doge coin Introduced 
+        if((blk_time > curTime) || (blk_time < starttime))
+             return false;
+        else
+            return true;   
+    }
+		
     /**
      * Parses an array of bytes containing a block into a Block object
      *
@@ -43,25 +54,32 @@ public class Block {
         if (!Block.checkMagicNumber(magicNumberBytes))
             return null;
 
+			
         // parse block size
         block.blockSize = blockBuffer.getInt();
         if (block.blockSize != (blockBuffer.limit() - Block.magicNumber.length - 4))
             return null;
         int lengthUntilEndOfBlock = block.blockSize;
 
+		
         // parse block header
         byte[] blockHeaderBytes = new byte[BlockHeader.length];
         blockBuffer.get(blockHeaderBytes);
         block.blockHeader = BlockHeader.parseBlockHeader(blockHeaderBytes);
         lengthUntilEndOfBlock -= BlockHeader.length;
 
-        // parse transaction counter
+	// check Valid block time      
+        if (!Block.checkBlockTime(block.blockHeader.timeInSecondsSinceEpoch)){
+	    System.out.println("Invalid block time");
+	    return null;
+	}
+        
+	// parse transaction counter
         byte[] vi = new byte[9];
         blockBuffer.get(vi);
         block.transactionCounter = new VarInt(vi, 0);
         blockBuffer.position(blockBuffer.position() - (9 -  block.transactionCounter.size));
         lengthUntilEndOfBlock -= block.transactionCounter.size;
-
 
         block.transactions = new ArrayList<Transaction>();
         long remainingTransactionsToParse = block.transactionCounter.value;

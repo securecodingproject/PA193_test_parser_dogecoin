@@ -12,7 +12,7 @@ public class Transaction {
     public List<TransactionInput> inputs;
     public VarInt outCounter;
     public List<TransactionOutput> outputs;
-    public static int lockTimeLength = 4;
+    public static final int lockTimeLength = 4;
     public byte[] lockTime;
     public int transactionSize;
 
